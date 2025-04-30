@@ -26,8 +26,32 @@ if [ "$choice" = "yes" ]; then
         sleep 3
         echo "Nothing Happen, do you want to wait for one more days?"
         read wait2
-        if [[ "$wait2" == "yes" ]]; then
+        if [ "$wait2" = "yes" ]; then
             echo "The seed germinated over night!"
+            sleep 2
+            echo "Do you want wait for sapling"
+            read wait3
+            if [ "$wait3" = "yes" ]; then
+                echo "Nothing Happen, do you want to wait for one more days?"
+                read wait4
+                if [ "$wait4" = "yes" ]; then
+                    echo "Nothing Happen, do you want to wait for one more days?"
+                    read wait5
+                    if [ "$wait5" = "yes" ]; then
+                        echo "The plant grew over night into a sapling!"
+                    else
+                    echo "You chose not to wait. Exiting in 3 seconds..."
+                    sleep 3
+                    ex=true
+                else
+                echo "You chose not to wait. Exiting in 3 seconds..."
+                sleep 3
+                ex=true      
+            else
+            echo "You chose not to wait. Exiting in 3 seconds..."
+            sleep 3
+            ex=true
+            fi
         else 
             ex=true
         fi
