@@ -8,8 +8,8 @@ echo "Hello, $name! Nice to meet you"
 
 #sleep 1
 
-ex=false
-while [ "$ex" = false ]
+exit=true
+while $exit
 do
 echo "Do you want to plant a new seed? (yes/no)"
 read choice
@@ -46,45 +46,51 @@ if [ "$choice" = "yes" ]; then
                         do
                             echo "Do you want to wait?"
                             read wa
-                            if [[ "$wa" = "yes" && "$height" -le 34 ]]; then
+                            if [[ "$wa" = "yes" && "$height" -lt 32 ]]; then
                                 day=$((day + 1))
                                 height=$((height + 2))
                                 echo "Day $day: The plant grows 2cm and 2 leaves, the current height is $height and there are $height leaves now."
-                            elif [ "$height" -ge 34 ]; then
+                            elif [ "$height" -ge 32 ]; then
                                 echo "Your plant is mature, the Final height is 34cm and the total leaf is 34."
                                 echo "Thank you for your playing"
                                 wait6=false
-                            fi
-                        done
+                                exit=false
                             else
                             echo "You chose not to wait. Exiting in 3 seconds..."
                             #sleep 3
                             wait6=false
+                            exit=false
                             fi
+                        done
+                        else
+                            echo "You chose not to wait. Exiting in 3 seconds..."
+                            #sleep 3
+                            wait6=false
+                        fi
                     else
                     echo "You chose not to wait. Exiting in 3 seconds..."
                     #sleep 3
-                    ex=true
+                    exit=false
                     fi
                 else
                 echo "You chose not to wait. Exiting in 3 seconds..."
                 #sleep 3
-                ex=true
+                exit=false
                 fi      
             else
             echo "You chose not to wait. Exiting in 3 seconds..."
             #sleep 3
-            ex=true
+            exit=false
             fi
     elif [ "$wait" = "no" ]; then
     echo "You chose not to wait. Exiting in 3 seconds..."
     #sleep 3
-    ex=true
+    exit=false
 fi
 elif [ "$choice" = "no" ]; then
     echo "You chose not to plant a seed. Exiting in 3 seconds..."
     #sleep 3
-    ex=true
+    exit=false
 else
 	echo "You can only answer yes or no"
 fi
