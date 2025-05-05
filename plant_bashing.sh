@@ -25,8 +25,7 @@ if [ "$choice" = "yes" ]; then
         echo "wait for one days"
         #sleep 1
         echo "Day 2: Nothing Happen, do you want to wait for one more days?"
-        read wait2
-        if [ "$wait2" = "yes" ]; then
+        if [ "$wait" = "yes" ]; then
             echo "Day 3: The seed germinated over night!"
             #sleep 1
             echo "Do you want wait for sapling"
