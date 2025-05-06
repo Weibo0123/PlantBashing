@@ -9,6 +9,7 @@ echo "Hello, $name! Nice to meet you"
 #sleep 1
 
 exit=true
+play_times=0
 while $exit
 do
 echo "Do you want to plant a new seed? (yes/no)"
@@ -18,6 +19,22 @@ if [ "$choice" = "yes" ]; then
     # If the user chooses 'yes', let them know they have planted a seed
     echo "Day 1: You have dug a hole and planted a small seed the size of a grain of rice."
     #sleep 1
+    if [ "$play_times" -lt 1 ]; then
+        echo "Do you want to name the plant?"
+    else
+        echo "Do you want to change the plant's name?"
+    fi
+    
+    read answer
+    if [ "$answer" = "yes" ]; then
+        echo "What do you want to name it?"
+        read plant_name
+        echo "Your plant's name is $plant_name!"
+    else
+        plant_name="Morpheus"
+        echo "Your plant has been named $plant_name by default."
+fi
+
     echo "In the Computer's digital world, the time moves mush faster than it does outside in the reality.Do you want to wait for one day?"
     read wait
     if [ "$wait" = "yes" ]; then
@@ -53,12 +70,11 @@ if [ "$choice" = "yes" ]; then
                                 echo "Your plant is mature, the Final height is 34cm and the total leaf is 34."
                                 echo "Thank you for your playing"
                                 wait=false
-                                exit=false
+                                ((play_times=play_times+1))
                             else
                             echo "You chose not to wait. Exiting in 3 seconds..."
                             #sleep 3
                             wait=false
-                            exit=false
                             fi
                         done
                         else
