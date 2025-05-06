@@ -20,28 +20,28 @@ if [ "$choice" = "yes" ]; then
     #sleep 1
     echo "In the Computer's digital world, the time moves mush faster than it does outside in the reality.Do you want to wait for one day?"
     read wait
-
     if [ "$wait" = "yes" ]; then
         echo "wait for one days"
         #sleep 1
         echo "Day 2: Nothing Happen, do you want to wait for one more days?"
+        read wait;
         if [ "$wait" = "yes" ]; then
             echo "Day 3: The seed germinated over night!"
             #sleep 1
             echo "Do you want wait for sapling"
-            read wait3
-            if [ "$wait3" = "yes" ]; then
+            read wait;
+            if [ "$wait" = "yes" ]; then
                 echo "Day 4: Nothing Happen, do you want to wait for one more days?"
-                read wait4
-                if [ "$wait4" = "yes" ]; then
+                read wait
+                if [ "$wait" = "yes" ]; then
                     echo "Day 5: Nothing Happen, do you want to wait for one more days?"
-                    read wait5
-                    if [ "$wait5" = "yes" ]; then
+                    read wait
+                    if [ "$wait" = "yes" ]; then
                         echo "Day 6: The plant grew over night into a sapling!"
-                        wait6=true
+                        wait=true
                         day=6
                         height=4
-                        while [ "$wait6" = true ] 
+                        while [ "$wait" = true ] 
                         do
                             echo "Do you want to wait?"
                             read wa
@@ -52,19 +52,19 @@ if [ "$choice" = "yes" ]; then
                             elif [ "$height" -ge 32 ]; then
                                 echo "Your plant is mature, the Final height is 34cm and the total leaf is 34."
                                 echo "Thank you for your playing"
-                                wait6=false
+                                wait=false
                                 exit=false
                             else
                             echo "You chose not to wait. Exiting in 3 seconds..."
                             #sleep 3
-                            wait6=false
+                            wait=false
                             exit=false
                             fi
                         done
                         else
                             echo "You chose not to wait. Exiting in 3 seconds..."
                             #sleep 3
-                            wait6=false
+                            wait=false
                         fi
                     else
                     echo "You chose not to wait. Exiting in 3 seconds..."
