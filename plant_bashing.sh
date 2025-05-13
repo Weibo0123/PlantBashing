@@ -42,7 +42,6 @@ do
                 Morpheus=0
                 Analies=0
                 Izzy=0
-                echo "All names have been used once. Resetting the names!"
             fi
 
             # Assign next available plant name
@@ -92,7 +91,7 @@ do
                                 elif [ "$height" -ge 32 ]; then
                                     echo "Your plant is mature! Final height: 34cm, total leaves: 34."
                                     echo "Thank you for playing!"
-                                    wait=false
+                                   wait=false
                                     ((play_times=play_times+1))
                                 else
                                     echo "You chose not to wait. Exiting in 3 seconds..."
@@ -126,5 +125,4 @@ do
         echo "You can only answer yes or no!"
     fi
 done
-
 echo "Goodbye!"
