@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Welcome to the PlantBashing game!!!"
 
 echo "What is your name?"
@@ -13,6 +14,13 @@ play_times=0
 Morpheus=0
 Analies=0
 Izzy=0
+
+choose_weathers()
+{
+    weathers=( "Rainy" "Sunny" "Cloudy" "Overcast" "Windstorm" "Rainy" "Foggy" )
+    random_index=$(( RANDOM % ${#weathers[@]} ))
+    echo "${weathers[$random_index]}"
+}
 
 while $exit
 do
@@ -64,20 +72,28 @@ do
         read wait
         if [ "$wait" = "yes" ]; then
             echo "Waiting for one day..."
-            echo "Day 2: Nothing happened, do you want to wait for one more day?"
+            echo "Day 2"
+            choose_weathers
+            echo "Nothing happened, do you want to wait for one more day?"
             read wait
             if [ "$wait" = "yes" ]; then
-                echo "Day 3: The seed germinated overnight!"
+                echo "Day 3"
+                echo "The seed germinated overnight!"
+                choose_weathers
                 echo "Do you want to wait for the sapling?"
+
                 read wait
                 if [ "$wait" = "yes" ]; then
                     echo "Day 4: Nothing happened, do you want to wait for one more day?"
+                    choose_weathers
                     read wait
                     if [ "$wait" = "yes" ]; then
                         echo "Day 5: Nothing happened, do you want to wait for one more day?"
+                        choose_weathers
                         read wait
                         if [ "$wait" = "yes" ]; then
                             echo "Day 6: The plant grew overnight into a sapling!"
+                            choose_weathers
                             wait=true
                             day=6
                             height=4
@@ -88,6 +104,7 @@ do
                                     day=$((day + 1))
                                     height=$((height + 2))
                                     echo "Day $day: The plant grows 2cm and 2 leaves. Current height: $height cm, total leaves: $height."
+                                    choose_weathers                                
                                 elif [ "$height" -ge 32 ]; then
                                     echo "Your plant is mature! Final height: 34cm, total leaves: 34."
                                     echo "Thank you for playing!"
@@ -126,3 +143,5 @@ do
     fi
 done
 echo "Goodbye!"
+
+
