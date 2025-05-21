@@ -8,22 +8,57 @@ read name
 echo "Hello, $name! Nice to meet you"
 
 # Variables initialization
-exit=true
+exit=false
 plant_names=("Morpheus" "Analies" "Izzy")
 play_times=0
 Morpheus=0
 Analies=0
 Izzy=0
+wait=""
+Day=1
+message=""
 
-choose_weathers()
+store_string()
 {
-    weathers=( "Rainy" "Sunny" "Cloudy" "Overcast" "Windstorm" "Rainy" "Foggy" )
-    random_index=$(( RANDOM % ${#weathers[@]} ))
-    echo "${weathers[$random_index]}"
+    if [ "$Day" -eq 1 ] || [ "$Day" -eq 3 ] || [ "$Day" -eq 4 ]; then
+        message="Nothing happened, do you want to wait for one more day?"
+    elif [ "$Day" -eq 2 ]; then
+        message="The seed germinated overnight!"
+    elif [ "$Day" -eq 5 ]; then
+        echo "The plant grew overnight into a sapling!"
+    fi
 }
 
-while $exit
-do
+choose_weather()
+{
+    weather=( "Rainy" "Sunny" "Cloudy" "Overcast" "Windstorm" "Rainy" "Foggy" )
+    random_index=$(( RANDOM % ${#weather[@]} ))
+    echo "${weather[$random_index]}"
+}
+
+ask_waiting()
+{
+    read wait
+    if [ "$wait" = "yes" ]; then
+        store_string
+        ((Day++))
+        echo "Waiting for one day..."
+        echo "Day "$Day""
+        choose_weather
+        echo "$message"
+    elif [ "$wait" = "no" ]; then
+        Day=1
+        exit=0
+        echo "You chose not to wait. Exiting in 3 seconds..."
+        
+    else
+        echo "You can only answer yes or no!"
+    fi
+}
+
+
+
+while $exit; do
     echo "Do you want to plant a new seed? (yes/no)"
     read choice
 
@@ -36,9 +71,9 @@ do
         else
             echo "Do you want to change the plant's name?"
         fi
-        
+
         read answer
-        
+
         if [ "$answer" = "yes" ]; then
             echo "What do you want to name it?"
             read plant_name
@@ -52,7 +87,7 @@ do
                 Izzy=0
             fi
 
-            # Assign next available plant name
+        # Assign next available plant name
             if [ "$Morpheus" -eq 0 ]; then
                 plant_name="${plant_names[0]}"
                 Morpheus=1
@@ -68,78 +103,36 @@ do
         fi
 
         # Proceed with waiting for the plant's growth
-        echo "In the Computer's digital world, time moves much faster than it does outside. Do you want to wait for one day?"
-        read wait
-        if [ "$wait" = "yes" ]; then
-            echo "Waiting for one day..."
-            echo "Day 2"
-            choose_weathers
-            echo "Nothing happened, do you want to wait for one more day?"
-            read wait
-            if [ "$wait" = "yes" ]; then
-                echo "Day 3"
-                echo "The seed germinated overnight!"
-                choose_weathers
-                echo "Do you want to wait for the sapling?"
-
-                read wait
-                if [ "$wait" = "yes" ]; then
-                    echo "Day 4: Nothing happened, do you want to wait for one more day?"
-                    choose_weathers
-                    read wait
-                    if [ "$wait" = "yes" ]; then
-                        echo "Day 5: Nothing happened, do you want to wait for one more day?"
-                        choose_weathers
-                        read wait
-                        if [ "$wait" = "yes" ]; then
-                            echo "Day 6: The plant grew overnight into a sapling!"
-                            choose_weathers
-                            wait=true
-                            day=6
-                            height=4
-                            while [ "$wait" = true ]; do
-                                echo "Do you want to wait for the plant to grow?"
-                                read wa
-                                if [ "$wa" = "yes" ] && [ "$height" -lt 32 ]; then
-                                    day=$((day + 1))
-                                    height=$((height + 2))
-                                    echo "Day $day: The plant grows 2cm and 2 leaves. Current height: $height cm, total leaves: $height."
-                                    choose_weathers                                
-                                elif [ "$height" -ge 32 ]; then
-                                    echo "Your plant is mature! Final height: 34cm, total leaves: 34."
-                                    echo "Thank you for playing!"
-                                   wait=false
-                                    ((play_times=play_times+1))
-                                else
-                                    echo "You chose not to wait. Exiting in 3 seconds..."
-                                    wait=false
-                                fi
-                            done
-                        else
-                            echo "You chose not to wait. Exiting in 3 seconds..."
-                            wait=false
-                        fi
-                    else
-                        echo "You chose not to wait. Exiting in 3 seconds..."
-                        exit=false
-                    fi
-                else
-                    echo "You chose not to wait. Exiting in 3 seconds..."
-                    exit=false
-                fi
+        echo "In the Computer's digital world, time moves much faster than it does outside. Do you want to wait for the plant?"
+        ask_waiting
+        ask_waiting
+        ask_waiting
+        ask_waiting
+        ask_waiting
+        wait=true
+        day=6
+        height=4
+        while [ "$wait" = true ]; do
+            echo "Do you want to wait for the plant to grow?"
+            read wa
+            if [ "$wa" = "yes" ] && [ "$height" -lt 32 ]; then
+                day=$((day + 1))
+                height=$((height + 2))
+                echo "Day $day: The plant grows 2cm and 2 leaves. Current height: $height cm, total leaves: $height."
+                choose_weather                                
+            elif [ "$height" -ge 32 ]; then
+                echo "Your plant is mature! Final height: 34cm, total leaves: 34."
+                echo "Thank you for playing!"
+                wait=false
+                ((play_times=play_times+1))
             else
                 echo "You chose not to wait. Exiting in 3 seconds..."
-                exit=false
+                wait=false
             fi
-        elif [ "$wait" = "no" ]; then
-            echo "You chose not to wait. Exiting in 3 seconds..."
-            exit=false
-        fi
-    elif [ "$choice" = "no" ]; then
-        echo "You chose not to plant a seed. Exiting in 3 seconds..."
-        exit=false
+        done
     else
-        echo "You can only answer yes or no!"
+        echo "You chose not to plant. Exiting in 3 seconds..."
+        exit=false
     fi
 done
 echo "Goodbye!"
